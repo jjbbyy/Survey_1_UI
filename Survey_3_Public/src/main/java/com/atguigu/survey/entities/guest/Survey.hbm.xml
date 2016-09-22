@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-8 8:46:58 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="com.atguigu.survey.entities.guest">
+    <class name="Survey" table="SURVEY_SURVEY">
+        <id name="surveyId" type="java.lang.Integer">
+            <column name="SURVEY_ID" />
+            <generator class="native" />
+        </id>
+        <property name="surveyName" type="java.lang.String">
+            <column name="SURVEY_NAME" />
+        </property>
+        <property name="completedStatus" type="boolean">
+            <column name="COMPLETED_STATUS" />
+        </property>
+        <property name="logoPath" type="java.lang.String">
+            <column name="LOGO_PATH" />
+        </property>
+        
+        <!-- 映射多对一关联关系 -->
+        <!-- name属性：当前类中，对对方的引用 -->
+        <!-- class属性：对方的类型 -->
+        <!-- column属性：对方的数据库表在当前数据库表中的外键列的列名 -->
+        <many-to-one name="user" class="User" column="USER_ID"/>
+        
+        <!-- 映射一对多关联关系 -->
+        <!-- name属性：对方集合对象的属性名 -->
+        <!-- table属性：维护关联关系的表名 -->
+        <!-- inverse属性：当前1的一端放弃维护关联关系 -->
+        <set name="bagSet" 
+        	 table="SURVEY_BAG" 
+        	 inverse="true" 
+        	 lazy="false" 
+        	 fetch="join"
+        	 order-by="bagOrder"
+        	 cascade="delete">
+        	<!-- key子标签和column属性指定维护关联关系的外键列的列名 -->
+        	<key column="SURVEY_ID"/>
+        	<one-to-many class="Bag"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

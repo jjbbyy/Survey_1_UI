@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-18 9:44:20 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.atguigu.survey.entities.manager.SurveyLog" table="SURVEY_LOG">
+        <id name="logId" type="java.lang.Integer">
+            <column name="LOG_ID" />
+            <generator class="native" />
+        </id>
+        <property name="methodName" type="java.lang.String">
+            <column name="METHOD_NAME" />
+        </property>
+        <property name="params" type="java.lang.String">
+            <column name="PARAMS" length="6000"/>
+        </property>
+        <property name="returnValue" type="java.lang.String">
+            <column name="RETURN_VALUE" length="6000"/>
+        </property>
+        <property name="operator" type="java.lang.String">
+            <column name="OPERATOR"/>
+        </property>
+        <property name="operateTime" type="java.lang.String">
+            <column name="OPERATE_TIME" />
+        </property>
+        <property name="exceptionType" type="java.lang.String">
+            <column name="EXCEPTION_TYPE" />
+        </property>
+        <property name="exceptionMessage" type="java.lang.String">
+            <column name="EXCEPTION_MESSAGE" />
+        </property>
+        <property name="typeName" type="java.lang.String">
+            <column name="TYPE_NAME" />
+        </property>
+    </class>
+</hibernate-mapping>

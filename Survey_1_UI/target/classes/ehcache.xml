@@ -1,0 +1,21 @@
+<ehcache>
+
+    <diskStore path="java.io.tmpdir"/>
+
+    <defaultCache
+        maxElementsInMemory="10000"
+        eternal="false"
+        timeToIdleSeconds="120"
+        timeToLiveSeconds="1200"
+        overflowToDisk="true"/>
+        
+	<!-- 创建一个命名的缓存区域 -->
+	<cache name="SurveyCache"
+	    maxElementsInMemory="10000"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="600"
+	    overflowToDisk="true"
+	    />
+
+</ehcache>

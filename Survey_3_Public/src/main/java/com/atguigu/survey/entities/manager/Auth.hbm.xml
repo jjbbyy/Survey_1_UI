@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-15 11:30:19 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="com.atguigu.survey.entities.manager">
+    <class name="Auth" table="SURVEY_AUTH">
+        <id name="authId" type="java.lang.Integer">
+            <column name="AUTH_ID" />
+            <generator class="native" />
+        </id>
+        <property name="authName" type="java.lang.String">
+            <column name="AUTH_NAME" />
+        </property>
+        
+        <!-- name属性：集合属性的属性名 -->
+        <!-- table属性：维护关联关系的表名，这里就看外键在哪里 -->
+        <set name="resSet" table="INNER_AUTH_RES">
+        	<!-- key子标签配合column属性：指定当前端在中间表中的外键列的列名 -->
+        	<key column="AUTH_ID"/>
+        	<!-- 使用many-to-many映射多对多关联关系 -->
+        	<!-- class属性：指定对方类型 -->
+        	<!-- column属性：指定对方在中间表中的外键列的列名 -->
+        	<many-to-many class="Res" column="RES_ID"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 自动扫描的包 -->
+	<!-- 一定要将默认的过滤规则禁用，否则context:include-filter配置仅仅是在原有规则的基础上追加，和没配一样 -->
+	<context:component-scan base-package="com.atguigu.survey.component.*" 
+		use-default-filters="false">
+		<context:include-filter 
+			type="annotation" 
+			expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<!-- 配置“前后缀”视图解析器 -->
+	<bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- handler方法返回值形式："guest/user_login" -->
+		<!-- 拼接前后缀之后："/WEB-INF/guest/user_login.jsp" -->
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 配置default-servlet-handler -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- 标配 -->
+	<mvc:annotation-driven/>
+	
+	<!-- 不写handler方法的访问地址通过配置view-controller前往 -->
+	<!-- path：浏览器请求的URL地址 -->
+	<!-- view-name：逻辑视图的名称——“拼前后缀那玩意儿” -->
+	<!-- 
+		@RequestMapping("/guest/user/toLoginUI")
+		public String toLoginUI() {
+			return "guest/user_login";
+		}
+	 -->
+	<mvc:view-controller path="/guest/user/toLoginUI" view-name="guest/user_login"/>
+	<mvc:view-controller path="/guest/user/toRegistUI" view-name="guest/user_regist"/>
+	<mvc:view-controller path="/manager/admin/toMainUI" view-name="manager/manager_main"/>
+	<mvc:view-controller path="/manager/admin/toLoginUI" view-name="manager/admin_login"/>
+	<mvc:view-controller path="/manager/auth/toAddUI" view-name="manager/auth_addUI"/>
+	<mvc:view-controller path="/manager/role/toAddUI" view-name="manager/role_addUI"/>
+	<mvc:view-controller path="/manager/admin/toAddUI" view-name="manager/admin_addUI"/>
+	
+	<!-- 配置异常映射/声明式异常 -->
+	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<!-- key属性：指定异常类型 -->
+				<!-- 开始结束标签之间：目标逻辑视图名称 -->
+				<prop key="com.atguigu.survey.e.UserNameAlreadyExistsException">guest/user_regist</prop>
+				<prop key="com.atguigu.survey.e.UserLoginFailedException">guest/user_login</prop>
+				<prop key="com.atguigu.survey.e.UserOperationForbiddenException">guest/user_login</prop>
+				<prop key="com.atguigu.survey.e.FileTooLargeException">guest/survey_addUI</prop>
+				<prop key="com.atguigu.survey.e.FileTypeInvalidException">guest/survey_addUI</prop>
+				<prop key="com.atguigu.survey.e.FileTooLargeExceptionEdit">guest/survey_editUI</prop>
+				<prop key="com.atguigu.survey.e.FileTypeInvalidExceptionEdit">guest/survey_editUI</prop>
+				<prop key="com.atguigu.survey.e.RemoveBagFailedException">error</prop>
+				<prop key="com.atguigu.survey.e.RemoveSurveyFailedException">error</prop>
+				<prop key="com.atguigu.survey.e.BagOrderDuplicateException">guest/bag_adjustUI</prop>
+				<prop key="com.atguigu.survey.e.SurveyEmptyException">error</prop>
+				<prop key="com.atguigu.survey.e.BagEmptyException">error</prop>
+				<prop key="com.atguigu.survey.e.AdminLoginFailedException">manager/admin_login</prop>
+				<prop key="com.atguigu.survey.e.AdminOperationForbiddenException">manager/admin_login</prop>
+				<prop key="com.atguigu.survey.e.AdminAlreadyExistsException">manager/admin_login</prop>
+				<prop key="com.atguigu.survey.e.HasNoRightException">error</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 配置自定义拦截器 -->
+	<mvc:interceptors>
+		<!-- <bean class="com.atguigu.survey.interceptors.LoginInterceptor"/> -->
+		<bean class="com.atguigu.survey.interceptors.RequestBinderInterceptor"/>
+		<bean class="com.atguigu.survey.interceptors.ResGenerateInterceptor"/>
+		<bean class="com.atguigu.survey.interceptors.AuthCheckInterceptor"/>
+	</mvc:interceptors>
+	
+	<!-- 配置国际化资源文件的基名 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="survey"/>
+	</bean>
+	
+	<!-- 配置multipart/form-data数据的解析器对象 -->
+	<bean id="multipartResolver" 
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+	</bean>
+	
+</beans>

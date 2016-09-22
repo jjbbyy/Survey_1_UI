@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description>Survey 1.0 core library</description>
+	<display-name>Atguigu core</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>atguigu</short-name>
+	<uri>http://www.atguigu.com/survey</uri>
+	
+	<tag>
+		<name>auth</name>
+		<tag-class>com.atguigu.survey.tag.AuthTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>servletPath</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>questionDetail</name>
+		<tag-class>com.atguigu.survey.tag.QuestionDetailTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>bagId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inputName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>questionType</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inputValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

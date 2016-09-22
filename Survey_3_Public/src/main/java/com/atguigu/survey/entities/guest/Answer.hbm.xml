@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-8-12 15:37:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="com.atguigu.survey.entities.guest">
+    <class name="Answer" table="SURVEY_ANSWER">
+        <id name="answerId" type="java.lang.Integer">
+            <column name="ANSWER_ID" />
+            <generator class="native" />
+        </id>
+        <property name="content" type="java.lang.String">
+            <column name="CONTENT" />
+        </property>
+        <property name="uuid" type="java.lang.String">
+            <column name="UUID" />
+        </property>
+        <property name="questionId" type="java.lang.Integer">
+            <column name="QUESTION_ID" />
+        </property>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="SURVEY_ID" />
+        </property>
+    </class>
+</hibernate-mapping>

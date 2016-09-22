@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 配置自定义路由器数据源的bean -->
+<bean id="dataSourceRouter"
+	class="org.springframework.jdbc.datasource.lookup.IsolationLevelDataSourceRouter">
+	<!-- 配置targetDataSources属性管理多个数据源 -->
+	<property name="targetDataSources">
+		<map>
+			<!-- 给每一个数据源分配一个键，形成一个键值对 -->
+			<entry key="ISOLATION_REPEATABLE_READ" value-ref="myRepeatableReadDataSource" />
+			<entry key="ISOLATION_SERIALIZABLE" value-ref="mySerializableDataSource" />
+		</map>
+	</property>
+	<!-- 配置默认数据源：在没有获取到任何一个键时，使用默认数据源 -->
+	<property name="defaultTargetDataSource" ref="myDefaultDataSource" />
+</bean>
